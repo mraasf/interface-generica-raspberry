@@ -1,5 +1,5 @@
-#Programa : Raspberry push button e leds
-#Autor : FILIPEFLOP
+
+#Autor : mraasf
  
 contador = 0
  
