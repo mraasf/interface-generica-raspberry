@@ -8,47 +8,48 @@ GPIO.setmode(GPIO.BOARD)
 
 
 #entradas das paletas // contador de toques
-left = 36
-right = 38
+left = 16 #rightPaletMotor
+right = 18 #leftPaletMotor
 
 #Define os pinos como saida
-GPIO.setup(16, GPIO.OUT)
-GPIO.setup(18, GPIO.OUT)
-GPIO.setup(29, GPIO.OUT)
-GPIO.setup(31, GPIO.OUT)
-GPIO.setup(33, GPIO.OUT)
-GPIO.setup(29, GPIO.OUT)
-GPIO.setup(40, GPIO.OUT) 
+  
+GPIO.setup(36, GPIO.OUT)#rigthPaletSwitch 
+GPIO.setup(38, GPIO.OUT)#leftPaletSwitch
+GPIO.setup(22, GPIO.OUT)#nosePoke
+GPIO.setup(31, GPIO.OUT)#leftStimulusLight
+GPIO.setup(33, GPIO.OUT)#houseLight
+GPIO.setup(29, GPIO.OUT)#rightStimulusLight
+GPIO.setup(40, GPIO.OUT)#feeder  
 
 #entradas das paletas
-GPIO.setup(36, GPIO.IN)
-GPIO.setup(38, GPIO.IN)
+GPIO.setup(16, GPIO.IN)
+GPIO.setup(18, GPIO.IN)
 
 
 #desliga todos as saidas
-GPIO.output(16,0)#pino 16
-GPIO.output(18,0)#pino 18
+GPIO.output(36,0)#pino 16
+GPIO.output(38,0)#pino 18
 GPIO.output(29,0)#pino 29
 GPIO.output(31,0)#pino 31
 
 GPIO.output(40,0)#pino 40 saida house light
 contador = 1
 
-while(1):
+while(contador <8):
 
     if contador == 1:
-        GPIO.output(16, 1)
+        GPIO.output(36, 1)
         print ("paleta direita")
         contador+=1
         time.sleep(1)
-        GPIO.output(16, 0)
+        GPIO.output(36, 0)
     #Caso contador = 2, aciona a saida
     if contador == 2:
-        GPIO.output(18, 1)
+        GPIO.output(38, 1)
         print ("paleta esquerda")
         contador+=1
         time.sleep(1)
-        GPIO.output(18, 0)
+        GPIO.output(38, 0)
  
     #Caso contador = 3, aciona a saida
     if contador == 3:
@@ -82,21 +83,32 @@ while(1):
     #zera a variavel contador
     if contador == 7:
         print ("teste terminou \n desligando as saidas e zerando o contador")
-        GPIO.output(16,0)
-        GPIO.output(18,0)
+        GPIO.output(36,0)
+        GPIO.output(38,0)
         GPIO.output(29,0)
         GPIO.output(31,0)
         GPIO.output(33,0)
         GPIO.output(40,0)
         contador = 0
-    #left = 0 
-    #if GPIO.input(left) == 0:
-    #    print("left desligado")
-    #if GPIO.input(left) == 1:
-    #GPIO.output(16,1)
-     #   GPIO.output(18,1)
-     #   print("left LIGADO")
-      
+    contador2 = 0
+    if contador == 0:
+        GPIO.output(36,1)
+        GPIO.output(38,1)
+        if GPIO.input(18) == 0:
+            print("left desligado")
+            contador2 = contador2+1
+            if contador2 == 5:
+                contador = 8
+        if GPIO.input(18) == 1:
+                print("left LIGADO")
+                
+        if GPIO.input(16) == 0:
+                print("Right desligado")
+                contador2 = contador2+1
+        if contador2 == 5:
+                contador = 8
+                if GPIO.input(16) == 1:
+                    print("right LIGADO")
+          
    
-
 
